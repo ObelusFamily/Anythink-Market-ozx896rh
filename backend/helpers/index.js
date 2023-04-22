@@ -1,5 +1,5 @@
 const axios = require("axios")
-export const generateImage = async (prompt) => {
+const generateImage = async (prompt) => {
   const size = "256x256";
   const headers = {
     Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
@@ -19,7 +19,7 @@ export const generateImage = async (prompt) => {
   return response.data.data[0].url;
 };
 
-export const handleErrorResponse = (res, error) => {
+const handleErrorResponse = (res, error) => {
   console.error(error);
   let message;
   if (error instanceof Error) {
@@ -29,3 +29,5 @@ export const handleErrorResponse = (res, error) => {
   }
   res.status(500).json({ message });
 };
+
+module.exports = { generateImage, handleErrorResponse };
