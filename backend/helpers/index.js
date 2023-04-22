@@ -1,3 +1,4 @@
+const axios = require("axios")
 export const generateImage = async (prompt) => {
   const size = "256x256";
   const headers = {
