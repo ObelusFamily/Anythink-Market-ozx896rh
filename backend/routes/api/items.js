@@ -6,6 +6,8 @@ var User = mongoose.model("User");
 var auth = require("../auth");
 const { sendEvent } = require("../../lib/event");
 
+const { generateImage, handleErrorResponse } = require("../../helpers");
+
 // Preload item objects on routes with ':item'
 router.param("item", function(req, res, next, slug) {
   Item.findOne({ slug: slug })
@@ -238,6 +240,26 @@ router.post("/:item/favorite", auth.required, function(req, res, next) {
       });
     })
     .catch(next);
+});
+
+// post an item
+router.post("/item", async function (req, res) {
+  const { title } = req.body;
+  let { imageUrl } = req.body;
+
+  if (!imageUrl) {
+    try {
+      imageUrl = await generateImage(title);
+    } catch (error) {
+      handleErrorResponse(res, error);
+      return;
+    }
+  }
+
+  // Save the item to the database or perform other necessary operations here
+  const item = { title, imageUrl };
+
+  res.json(item);
 });
 
 // Unfavorite an item

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "openai": "^3.2.1"
+  },
+  "devDependencies": {
+    "yarn": "^1.22.19"
+  }
+}
